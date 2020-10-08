@@ -4,14 +4,6 @@
 #include "vigenere.h"
 #include "caesar.h"
 
-void increment_keyword_ch(int& cur_shift, int max_shift) {
-    if (cur_shift < max_shift) {
-        cur_shift += 1;
-    } else {
-        cur_shift = 0;
-    }
-}
-
 std::string encryptVigenere(std::string plain_text, std::string keyword) {
     std::string encrypted_text = "";
     int cur_shift = 0;
@@ -25,7 +17,7 @@ std::string encryptVigenere(std::string plain_text, std::string keyword) {
     for (int i = 0; i < plain_text.length(); i++) {
         if (isalpha(plain_text[i])) {
             encrypted_text += shiftChar(plain_text[i], shifts[cur_shift]);
-            increment_keyword_ch(cur_shift, max_shift);
+            cur_shift = cur_shift < max_shift ? cur_shift + 1 : 0;
         } else {
             encrypted_text += plain_text[i];
         }
