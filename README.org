@@ -38,7 +38,7 @@ the two functions specified in the main lab.
 
 ** Task C
 
-Add files ~viginere.cpp and ~viginere.h~ to your program. In them,
+Add files ~vigenere.cpp~ and ~vigenere.h~ to your program. In them,
 write the function specified in the main lab. This should also be
 tested via doctest from ~tests.cpp~.
 
