@@ -4,12 +4,6 @@
 #include "vigenere.h"
 #include "caesar.h"
 
-char keywordEncryption(char c, char key) {
-    int shift = (int)key - 97;
-    char new_c = (int)c + shift;
-    return new_c;
-}
-
 void increment_keyword_ch(int& cur_shift, int max_shift) {
     if (cur_shift < max_shift) {
         cur_shift += 1;
