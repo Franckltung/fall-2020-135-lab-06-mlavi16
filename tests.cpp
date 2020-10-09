@@ -1,5 +1,70 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include "funcs.h"
+#include "caesar.h"
+#include "vigenere.h"
+#include "decryption.h"
 
-// add your tests here
+TEST_CASE("encryptCaesar(plain_text, rshift)") {
+    CHECK(encryptCaesar("Way to Go!", 5) == "Bfd yt Lt!");
+    CHECK(encryptCaesar("", 5) == "");
+    CHECK(encryptCaesar(" ", 5) == " ");
+    CHECK(encryptCaesar("m", 5) == "r");
+    CHECK(encryptCaesar("32", 5) == "32");
+    CHECK(encryptCaesar("Hello.", -2) == "Fcjjm.");
+    CHECK(encryptCaesar("Heyyy", 0) == "Heyyy");
+    CHECK(encryptCaesar("cookie", 26) == "cookie");
+}
+
+TEST_CASE("shiftChar(char, rshift)") {
+    CHECK(shiftChar('a', 5) == 'f');
+    CHECK(shiftChar('z', 2) == 'b');
+    CHECK(shiftChar('a', -2) == 'y');
+    CHECK(shiftChar('B', 5) == 'G');
+    CHECK(shiftChar('X', 4) == 'B');
+    CHECK(shiftChar('C', -5) == 'X');
+    CHECK(shiftChar('!', 3) == '!');
+    CHECK(shiftChar(' ', 4) == ' ');
+    CHECK(shiftChar('3', 3) == '3');
+    CHECK(shiftChar('j', -3) == 'g');
+    CHECK(shiftChar('f', 0) == 'f');
+    CHECK(shiftChar('a', 26) == 'a');
+}
+
+TEST_CASE("encryptVigenere(plain_text, keyword)") {
+    CHECK(encryptVigenere("Hello, World!", "cake") == "Jevpq, Wyvnd!");
+    CHECK(encryptVigenere("cake", "helloworld") == "jevp");
+    CHECK(encryptVigenere("", "oof") == "");
+    CHECK(encryptVigenere("   ", "cake") == "   ");
+    CHECK(encryptVigenere("cake 999 cake", "cake") == "eaui 999 eaui");
+    CHECK(encryptVigenere("hi ", "") == "hi ");
+    CHECK(encryptVigenere("hal", "b") == "ibm");
+    CHECK(encryptVigenere("z", "z") == "y");
+    // Lab says "you may assume that the keyword contains only lowercase alphabetic characters a - z."
+}
+
+TEST_CASE("decryptCaesar(cipher_text, rshift)") {
+    CHECK(decryptCaesar("Rovvy, Gybvn!", 10) == "Hello, World!");
+    CHECK(decryptCaesar("Bfd yt Lt!", 5) == "Way to Go!");
+    CHECK(decryptCaesar("Way to Go!", -5) == "Bfd yt Lt!");
+    CHECK(decryptCaesar("", 5) == "");
+    CHECK(decryptCaesar(" ", 3) == " ");
+    CHECK(decryptCaesar("t", 2) == "r");
+    CHECK(decryptCaesar("487", 8) == "487");
+    CHECK(decryptCaesar("Dora the explorer!", 0) == "Dora the explorer!");
+    CHECK(decryptCaesar("Dop", 26) == "Dop");
+
+    CHECK(decryptCaesar(encryptCaesar("My name is Inigo Montoya. You killed my father. PREPARE TO DIE!!!", 7), 7) == "My name is Inigo Montoya. You killed my father. PREPARE TO DIE!!!");
+}
+
+TEST_CASE("decryptVigenere(cipher_text, rshift)") {
+    CHECK(decryptVigenere("Jevpq, Wyvnd!", "cake") == "Hello, World!");
+    CHECK(decryptVigenere("jevp", "helloworld") == "cake");
+    CHECK(decryptVigenere("", "wow") == "");
+    CHECK(decryptVigenere("  ", "cool") == "  ");
+    CHECK(decryptVigenere("eauI 999 eaui", "cake") == "cakE 999 cake");
+    CHECK(decryptVigenere("hi", "") == "hi");
+    CHECK(decryptVigenere("z", "z") == "a");
+
+    CHECK(decryptVigenere(encryptVigenere("My name is Inigo Montoya. You killed my father. PREPARE TO DIE!!!", "lollipop"), "lollipop") == "My name is Inigo Montoya. You killed my father. PREPARE TO DIE!!!");
+}
