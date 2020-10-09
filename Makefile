@@ -1,10 +1,10 @@
+OBJECTS = funcs.o caesar.o vigenere.o decryption.o
 
+main: main.o ${OBJECTS}
+	g++ -o main main.o ${OBJECTS}
 
-main: main.o funcs.o caesar.o vigenere.o decryption.o
-	g++ -o main main.o funcs.o
-
-tests: tests.o 
-	g++ -o tests tests.o 
+tests: tests.o ${OBJECTS}
+	g++ -o tests tests.o ${OBJECTS}
 
 funcs.o: funcs.cpp funcs.h
 
@@ -14,13 +14,12 @@ vigenere.o: vigenere.cpp vigenere.h
 
 decryption.o: decryption.cpp decryption.h
 
-main.o: main.cpp funcs.h
+main.o: main.cpp funcs.h caesar.h vigenere.h decryption.h
 
-
-tests.o: tests.cpp  doctest.h
+tests.o: tests.cpp  doctest.h caesar.h vigenere.h decryption.h
 
 clean:
-	rm -f main.o tests.o funcs.o caesar.o vigenere.o decryption.o
+	rm -f main.o tests.o ${OBJECTS}
 
 help:
 	@echo  make main : make executable named main
