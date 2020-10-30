@@ -80,6 +80,9 @@ TEST_CASE("decode(cipher_text)") {
     txt = "In a hole In the GrouNd there lived a hobbit...";
     CHECK(decode(encryptCaesar(txt, -3)) == txt);
 
+    txt = "Is this the real life? Is this just fantasy?";
+    CHECK(decode(txt) == txt);
+
     txt = "12345!?:)(:";
     CHECK(decode("12345!?:)(:") == txt);
 
