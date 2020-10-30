@@ -1,9 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "funcs.h"
 #include "caesar.h"
 #include "vigenere.h"
 #include "decryption.h"
+#include "decode.h"
 
 TEST_CASE("encryptCaesar(plain_text, rshift)") {
     CHECK(encryptCaesar("Way to Go!", 5) == "Bfd yt Lt!");
@@ -67,4 +67,30 @@ TEST_CASE("decryptVigenere(cipher_text, rshift)") {
     CHECK(decryptVigenere("z", "z") == "a");
 
     CHECK(decryptVigenere(encryptVigenere("My name is Inigo Montoya. You killed my father. PREPARE TO DIE!!!", "lollipop"), "lollipop") == "My name is Inigo Montoya. You killed my father. PREPARE TO DIE!!!");
+}
+
+TEST_CASE("decode(cipher_text)") {
+    std::string txt = "\'Hello, world!\' How are you today?";
+    CHECK(decode(encryptCaesar(txt, 7)) == txt);
+    CHECK(decode("\'Olssv, dvysk!\' Ovd hyl fvb avkhf?") == txt);
+
+    txt = "We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.";
+    CHECK(decode(encryptCaesar(txt, 14)) == txt);
+    
+    txt = "In a hole In the GrouNd there lived a hobbit...";
+    CHECK(decode(encryptCaesar(txt, -3)) == txt);
+
+    txt = "12345!?:)(:";
+    CHECK(decode("12345!?:)(:") == txt);
+
+    txt = "";
+    CHECK(decode("") == txt);
+
+    //Fails because the frequencies don't match the general frequencies of sentences in English; too many 'p's probably.
+    // txt = "peter piper picked a pack of pickled peppers pokemon popped popcorn pleasantly";
+    // CHECK(decode(encryptCaesar(txt, 15)) == txt);
+
+    //Fails because the frequencies don't match the general frequencies of sentences in English; message is too short
+    // txt = "Hello world";
+    // CHECK(decode(encryptCaesar(txt, 23)) == txt);
 }
