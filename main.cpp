@@ -9,6 +9,7 @@ Assignment: Lab 6
 #include "caesar.h"
 #include "vigenere.h"
 #include "decryption.h"
+#include "decode.h"
 
 
 int main()
@@ -19,6 +20,9 @@ int main()
   std::cout << "Vigenere cipher: \"Hello, World!\", shift: \"cake\" --> " << encryptVigenere("Hello, World!", "cake") << std::endl;
   std::cout << "Decrypting Caesar cipher: \"" << encryptCaesar("Hello, World!", 10) << "\", shift: 10 --> " << decryptCaesar(encryptCaesar("Hello, World!", 10), 10) << std::endl;
   std::cout << "Decrypting Vigenere cipher: \"" << encryptVigenere("Hello, World!", "cake") << "\", shift: \"cake\" --> " << decryptVigenere(encryptVigenere("Hello, World!", "cake"), "cake") << std::endl;
+  std::string text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus lacinia diam id eros dapibus, a scelerisque sapien ultricies.";
+  std::cout << encryptCaesar("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus lacinia diam id eros dapibus, a scelerisque sapien ultricies.", 3) << std::endl;
+  std::cout << decode(encryptCaesar(text, 5)) << std::endl;
 
   return 0;
 }

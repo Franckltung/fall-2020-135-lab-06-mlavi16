@@ -1,4 +1,4 @@
-OBJECTS = funcs.o caesar.o vigenere.o decryption.o
+OBJECTS = funcs.o caesar.o vigenere.o decryption.o decode.o
 
 main: main.o ${OBJECTS}
 	g++ -o main main.o ${OBJECTS}
@@ -10,13 +10,15 @@ funcs.o: funcs.cpp funcs.h
 
 caesar.o: caesar.cpp caesar.h
 
-vigenere.o: vigenere.cpp vigenere.h
+vigenere.o: vigenere.cpp vigenere.h caesar.h
 
-decryption.o: decryption.cpp decryption.h
+decryption.o: decryption.cpp decryption.h caesar.h vigenere.h
 
-main.o: main.cpp funcs.h caesar.h vigenere.h decryption.h
+decode.o: decode.cpp decode.h decryption.h
 
-tests.o: tests.cpp  doctest.h caesar.h vigenere.h decryption.h
+main.o: main.cpp funcs.h caesar.h vigenere.h decryption.h decode.h
+
+tests.o: tests.cpp  doctest.h caesar.h vigenere.h decryption.h decode.h
 
 clean:
 	rm -f main.o tests.o ${OBJECTS}
