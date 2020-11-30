@@ -31,7 +31,7 @@ std::string decode(std::string encrypted_str) {
         }
 
         // finds how similar the frequences of letters in the decrypted str are to what they're supposed to be in a regular sentence
-        dist_arr[i] = dist_bet_freqs(freq, str_freq);
+        dist_arr[i] = squared_dist_bet_freqs(freq, str_freq);
     }
 
     // finds what shift makes a string with frequences closest to what they're supposed to be in a normal sentence
@@ -55,13 +55,12 @@ double letter_freq(std::string str, char ch) {
     return (double)counter / letter_counter;
 } 
 
-double dist_bet_freqs(double freq[], double str_freq[]) {
-    // Function finds the distance between the two arrays
+double squared_dist_bet_freqs(double freq[], double str_freq[]) {
+    // Function finds the squared distance between the two arrays
     double dist = 0;
     for (int i = 0; i < 26; i++){
         dist += pow(freq[i] - str_freq[i], 2);
     }
-    dist = sqrt(dist);
     return dist;
 }
 
