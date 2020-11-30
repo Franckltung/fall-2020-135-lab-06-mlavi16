@@ -16,7 +16,7 @@ std::string decryptVigenere(std::string cipher_text, std::string keyword) {
     int shifts [keyword.length()];
 
     for (int i = 0; i < keyword.length(); i++){
-        shifts[i] = ((int)keyword[i] - 97) * -1; // a = 97
+        shifts[i] = ((int)tolower(keyword[i]) - 97) * -1; // a = 97
     }
     for (int i = 0; i < cipher_text.length(); i++) {
         if (isalpha(cipher_text[i])) {

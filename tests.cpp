@@ -29,6 +29,7 @@ TEST_CASE("shiftChar(char, rshift)") {
     CHECK(shiftChar('j', -3) == 'g');
     CHECK(shiftChar('f', 0) == 'f');
     CHECK(shiftChar('a', 26) == 'a');
+	CHECK(shiftChar('a', -52) == 'a');
 }
 
 TEST_CASE("encryptVigenere(plain_text, keyword)") {
@@ -40,7 +41,9 @@ TEST_CASE("encryptVigenere(plain_text, keyword)") {
     CHECK(encryptVigenere("hi ", "") == "hi ");
     CHECK(encryptVigenere("hal", "b") == "ibm");
     CHECK(encryptVigenere("z", "z") == "y");
+	CHECK(encryptVigenere("z", "Z") == "y");
     // Lab says "you may assume that the keyword contains only lowercase alphabetic characters a - z."
+	// FRANCK: I added support anyway
 }
 
 TEST_CASE("decryptCaesar(cipher_text, rshift)") {
@@ -65,6 +68,7 @@ TEST_CASE("decryptVigenere(cipher_text, rshift)") {
     CHECK(decryptVigenere("eauI 999 eaui", "cake") == "cakE 999 cake");
     CHECK(decryptVigenere("hi", "") == "hi");
     CHECK(decryptVigenere("z", "z") == "a");
+	CHECK(decryptVigenere("z", "Z") == "a");
 
     CHECK(decryptVigenere(encryptVigenere("My name is Inigo Montoya. You killed my father. PREPARE TO DIE!!!", "lollipop"), "lollipop") == "My name is Inigo Montoya. You killed my father. PREPARE TO DIE!!!");
 }
